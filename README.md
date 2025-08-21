@@ -1,84 +1,63 @@
-#Business_Driven
+# Predictive Buying Strategy
 
+Projeto de **Predição e Decisão** aplicado para **otimizar compras de produtos para revenda**.  
+O foco é **maximizar lucro esperado**, **reduzir perdas com itens defeituosos** e **padronizar decisões** do time de compras.
 
-Empresas que compram lotes para revenda enfrentam dois riscos:
+---
 
-Comprar itens defeituosos (prejuízo direto);
+## 🎯 Problema de Negócio
+Empresas que compram lotes para revenda enfrentam dois riscos principais:
+1. **Comprar itens defeituosos** → prejuízo direto.  
+2. **Rejeitar itens bons** → perda de receita.  
 
-Rejeitar itens bons (perda de receita).
-Objetivo: Maximizar o lucro esperado por item, decidindo comprar ou não comprar com base no risco (probabilidade de defeito) e no trade-off preço de compra × preço de revenda.
+**Objetivo:** Definir uma **estratégia preditiva de compra** que maximize o retorno esperado por produto.
 
-🧩 Abordagem
+---
 
-Modelos de classificação estimam a probabilidade de defeito por item (features x1…x20).
+## 💰 Lucro Esperado
 
-Regra de decisão econômica: compra apenas quando o lucro esperado é positivo:
+A decisão de compra é baseada no **lucro esperado**:
 
-Lucro Esperado
-=
-(
-1
-−
-𝑝
-^
-(
-defeito
-)
-)
-×
-Pre
-c
-¸
-o de Revenda
-−
-Custo de Compra
-Lucro Esperado=(1−
-p
-^
-	​
+$$
+\mathbb{E}[\text{Lucro}] \;=\; (1 - \hat p_{\text{defeito}})\cdot P_{\text{revenda}} \;-\; C_{\text{compra}}
+$$
 
-(defeito))×Pre
-c
-¸
-	​
+**Regra de decisão:**
 
-o de Revenda−Custo de Compra
+$$
+\text{Comprar se } \mathbb{E}[\text{Lucro}] > 0 
+\;\;\Longleftrightarrow\;\;
+\hat p_{\text{defeito}} \;<\; 1 - \frac{C_{\text{compra}}}{P_{\text{revenda}}}
+$$
 
-Governança de risco: o limiar pode ser calibrado para metas (ex.: reduzir taxa de defeituosos < X%).
+**Onde:**
+- $\hat p_{\text{defeito}}$ = probabilidade prevista de defeito (modelo preditivo)  
+- $P_{\text{revenda}}$ = preço de revenda  
+- $C_{\text{compra}}$ = custo de compra  
 
+> 🔒 **Governança de risco:** o limiar pode ser calibrado para metas do negócio (ex.: reduzir taxa de defeituosos < 5%).
+
+---
 
 ## ✅ Resultados Principais
-- **Melhor Modelo:** SVM (AUC = 0.989, Acurácia = 95,5%)  
-- **Validação:** AUC = 0.857 no conjunto de validação  
-- **Decisão de Compra:** 96,9% de acerto nas compras, com lucro observado de R$ 5.539,68  
 
+- **Melhor modelo:** SVM (AUC = 0.989, Acurácia = 95,5%)  
+- **Validação:** AUC = 0.857, Acurácia = 82,8%  
+- **Decisão de Compra:**  
+  - 96,9% dos produtos comprados estavam realmente bons  
+  - Especificidade = 75% (evitou 3 em cada 4 defeituosos)  
+- **Lucro:**  
+  - Lucro esperado = R$ 4.340,21  
+  - Lucro real observado = **R$ 5.539,68**
 
-💼 O que o negócio ganha
+---
 
-Mais lucro por lote (seleção economicamente ótima, não só “acurácia”).
+## 📊 Impacto para o Negócio
+- **Mais margem**: foco em produtos com maior retorno esperado.  
+- **Menos perdas**: queda significativa em compras erradas.  
+- **Decisão escalável e auditável**: cada item tem registro de probabilidade, custo e decisão.  
+- **Cenários simuláveis**: gestor pode ajustar preço de revenda e política de risco.  
 
-Menos devoluções e custos de “retrabalho”.
+---
 
-Processo escalável e auditável para times de compras.
-
-Alavancas claras: preço de revenda, limiar de risco e orçamento.
-
-🔑 KPIs de Gestão
-
-Lucro total e por item comprado
-
-Taxa de acerto das compras (itens bons comprados / itens comprados)
-
-% de defeituosos evitados
-
-Receita perdida estimada (bons não comprados)
-
-ROI do modelo (ganho incremental vs. política anterior)
-
-🛠️ Implementação (visão prática)
-
-Modelagem: testamos múltiplos algoritmos (ex.: SVM, árvore, etc.) e escolhemos o que maximiza resultado econômico no conjunto de validação.
-
-Decisão: cada item recebe “Comprar / Não comprar” com base no lucro esperado.
-
-Calibração: o limiar pode ser movido conforme objetivos (ex.: “ser conservador em épocas de caixa curto”).
+## 🗂️ Estrutura do Repositório
