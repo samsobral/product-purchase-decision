@@ -60,4 +60,3 @@ $$
 
 ---
 
-## 🗂️ Estrutura do Repositório
