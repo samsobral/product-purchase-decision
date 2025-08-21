@@ -1,4 +1,4 @@
-# Predictive Buying Strategy
+# Predictive Buying Strategy - Business Driven
 
 Projeto de **Predição e Decisão** aplicado para **otimizar compras de produtos para revenda**.  
 O foco é **maximizar lucro esperado**, **reduzir perdas com itens defeituosos** e **padronizar decisões** do time de compras.
